@@ -83,12 +83,14 @@ for h in heroes:
         if h == 'Hogger':
             r = 'Bruiser'
         elif h == 'Maiev':
-            h == 'Melee Assasin'
+            r = 'Melee Assasin'
         elif h == 'LostVikings':
             r = 'Support'
         else:
             r = None
     data['role'].append(r)
+    if h == "Maiev":
+        print(r)
     print('\n')
 
 
