@@ -42,30 +42,26 @@ data = {'hero': heroes,
         'weapon_range': list()
         }
 
-print(data)
 
-
-# L90ETC is ETC
-# Crusader Johanna
-# MeiOW Mei
 tanks = ['Anubarak', 'Arthas', 
-        'Blaze', 'Cusader'
-        'Cho', 'Diablo', 'Garrosh'
+        'Firebat', 'Crusader',
+        'Cho', 'Diablo', 'Garrosh',
         'L90ETC',
-        'MalGanis',
+        'MalGanis', 
         'MeiOW',
         'Muradin', 'Stitches', 'Tyrael']
-bruisers = ['Artanis', 'Chen', 'Deathwing', 'Dehaka', 'Dva', 'Gazlowe',
+bruisers = ['Artanis', 'Chen', 'Deathwing', 'Dehaka', 'DVa', 'Tinker',
              'Hogger', 'Imperius', 'Leoric', 'Malthael', 'Ragnaros', 
-             'Rexxar', 'Sonya', 'Thrall', 'Varian', 'Xul', 'Yrel']
+             'Rexxar', 'Barbarian', 'Thrall', 'Varian', 'Necromancer', 'Yrel']
 meleesAssasins = ['Alarak', 'Butcher', 'Illidan', 'Kerrigan', 'Maiev',
-                 'Murky', 'Qhira', 'Samuro',  'Valeera', 'Zeratul']
+                 'Murky', 'NexusHunter', 'Samuro',  'Valeera', 'Zeratul']
 support = ['Abathur', 'Medivh', 'LostVikings', 'Zarya']
+
+
 for h in heroes:
 
     # determine role
     try:
-        print(h, data_json[h]['descriptors'])
         if h in bruisers:
             r = 'Bruiser'
         elif h in tanks:
@@ -89,9 +85,6 @@ for h in heroes:
         else:
             r = None
     data['role'].append(r)
-    if h == "Maiev":
-        print(r)
-    print('\n')
 
 
     # other attributes
@@ -131,16 +124,55 @@ for h in heroes:
         for r in weapon:
             data['weapon_' + r].append(None)
 
+# correct spelling of hero names
+heroNames = {'hero': {
+                     # Bruisers
+                    'DVa': 'D.Va',              
+                    'Barbarian': 'Sonya',
+                    'Necromancer': 'Xul',
+                    'Tinker': 'Gazlowe',
 
-# see roles assigned
-# for i in range(len(role)):
-#     print(heroes[i], role[i])
+                    # Healers
+                    'FaerieDragon': 'Brightwing', 
+                    'LiLi': 'Li Li',
+                    'Monk': 'Kharazim',
+                    'Medic': 'Lt. Morales',
 
-df = pd.DataFrame(data).dropna(how='any')
-print(df.dtypes)
+                    # Melee Assassin
+                    'NexusHunter': 'Qhira',
+
+                    # Ranged Assassins
+                    'Amazon': 'Cassia',
+                    'DemonHunter': 'Valla',
+                    'Dryad': 'Lunara',
+                    'Guldan': "Gul'dan",
+                    'Kaelthas': "Kael'thas",
+                    'KelThuzad': "Kel'Thuzad",
+                    'SgtHammer': 'Sgt. Hammer',
+                    'Wizard': 'Li-Ming',
+                    'WitchDoctor': 'Nazeebo',
+                    'Zuljin': "Zul'jin",
+                
+                    # Support
+                    'LostVikings': 'Lost Vikings',
+
+                    # Tank
+                    'Anubarak': "Anub'arak",
+                    'Crusader': 'Johanna',
+                    'Firebat': 'Blaze',
+                    'L90ETC': 'E.T.C.',
+                    'MalGanis': "Mal'Ganis",
+                    'MeiOW': 'Mei'
+                }
+        }
+
+df = (pd.DataFrame(data)
+        .replace(heroNames, regex=False)
+        .dropna(how='any')
+        )
+
+
+# df = pd.DataFrame(data
 
 # export data
 df.to_csv(os.path.join(dir_data, 'herodata.csv'), index=False)
-
-print(df.head())
-print(df.describe())
