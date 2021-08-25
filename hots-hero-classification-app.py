@@ -35,7 +35,8 @@ def user_input_features():
     weapon_damage = make_slider('weapon_damage', 'Weapon Damage')
     weapon_period = make_slider('weapon_period', 'Weapon Period')
     weapon_range = make_slider('weapon_damage', 'Weapon Range')
-    data = {'rating_survivability': rating_survivability,
+    data = {'rating_damage': rating_damage,
+            'rating_survivability': rating_survivability,
             'rating_utility': rating_utility,
             'life_amount': life_amount,
             'life_regenRate': life_regenRate,
@@ -54,5 +55,16 @@ st.write(user_df.T)
 # load the model from disk
 loaded_model = pickle.load(open('rf_model.sav', 'rb'))
 
+prediction = loaded_model.predict(user_df)
+prediction_proba = pd.DataFrame(loaded_model.predict_proba(user_df), columns=loaded_model.classes_)
 
+# st.subheader('Class labels and their corresponding index number')
+# st.write(iris.target_names)
+
+st.subheader('Prediction')
+# st.write(iris.target_names[prediction])
+st.write(prediction)
+
+st.subheader('Prediction Probability')
+st.write(prediction_proba)
 
