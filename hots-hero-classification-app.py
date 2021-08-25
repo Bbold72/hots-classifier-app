@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import pickle
 import os
 
 dir_data = 'data'
@@ -44,7 +45,14 @@ def user_input_features():
     features = pd.DataFrame(data, index=[0])
     return features
 
-df = user_input_features()
+user_df = user_input_features()
 
 st.subheader('User Input parameters')
-st.write(df.T)
+st.write(user_df.T)
+
+
+# load the model from disk
+loaded_model = pickle.load(open('rf_model.sav', 'rb'))
+
+
+
