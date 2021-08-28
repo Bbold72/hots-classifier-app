@@ -20,10 +20,11 @@ st.write("""
 This app predicts the **role** of a hero given specified attributes!
 """)
 
+# slider for user to adjust inputs to model
 st.sidebar.header('User Input')
-
 def make_slider(var_name, slider_name):
     return st.sidebar.slider(slider_name, float(agg_df.loc['min', var_name]), float(agg_df.loc['max', var_name]), float(agg_df.loc['median', var_name]))
+
 
 def user_input_features():
     # min, max, default
@@ -35,36 +36,44 @@ def user_input_features():
     weapon_damage = make_slider('weapon_damage', 'Weapon Damage')
     weapon_period = make_slider('weapon_period', 'Weapon Period')
     weapon_range = make_slider('weapon_damage', 'Weapon Range')
-    data = {'rating_damage': rating_damage,
-            'rating_survivability': rating_survivability,
-            'rating_utility': rating_utility,
-            'life_amount': life_amount,
-            'life_regenRate': life_regenRate,
-            'weapon_damage': weapon_damage,
-            'weapon_period': weapon_period,
-            'weapon_range': weapon_range}
+    data = {'Rating Damage': rating_damage,
+            'Rating Survivability': rating_survivability,
+            'Rating Utility': rating_utility,
+            'Life Amount': life_amount,
+            'Life Regeneration Rate': life_regenRate,
+            'Weapon Damage': weapon_damage,
+            'Weapon Period': weapon_period,
+            'Weapon Range': weapon_range}
     features = pd.DataFrame(data, index=[0])
     return features
 
+# return user input as a dataframe
 user_df = user_input_features()
 
+
+# format dataframe for output
+user_df_display = user_df.T 
+user_df_display.columns = ['Input']
+user_df_display.index.names = ['Parameter']
+
+# display user's input
 st.subheader('User Input parameters')
-st.write(user_df.T)
+st.write(user_df_display)
 
 
 # load the model from disk
 loaded_model = pickle.load(open('rf_model.sav', 'rb'))
 
-prediction = loaded_model.predict(user_df)
+# predict hero role based on user input
+prediction = pd.DataFrame(loaded_model.predict(user_df), columns=['Role'])
 prediction_proba = pd.DataFrame(loaded_model.predict_proba(user_df), columns=loaded_model.classes_)
 
-# st.subheader('Class labels and their corresponding index number')
-# st.write(iris.target_names)
 
-st.subheader('Prediction')
-# st.write(iris.target_names[prediction])
+# display model prediction
+# st.subheader('Prediction')
 st.write(prediction)
 
+# Prediction Probabilities for each role
 st.subheader('Prediction Probability')
 st.write(prediction_proba)
 
