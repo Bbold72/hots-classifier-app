@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import pickle
 import os
+from sklearn.ensemble import RandomForestClassifier
+
 
 dir_data = 'data'
 dir_output = 'output'
