@@ -22,11 +22,21 @@ st.write("""
 This app predicts the **role** of a hero given specified attributes!
 """)
 
-# slider for user to adjust inputs to model
+# Side Bar
 st.sidebar.header('User Input')
+
+#
+model_option = st.sidebar.selectbox('Model', 
+    ('Random Forest', 
+    'Gaussian Naive Bayes', 
+    'Multinomial Naive Bayes'
+    )
+)
+print(model_option)
+
+# slider for user to adjust inputs to model
 def make_slider(var_name, slider_name):
     return st.sidebar.slider(slider_name, float(agg_df.loc['min', var_name]), float(agg_df.loc['max', var_name]), float(agg_df.loc['median', var_name]))
-
 
 def user_input_features():
     # min, max, default
