@@ -53,7 +53,7 @@ tanks = ['Anubarak', 'Arthas',
 bruisers = ['Artanis', 'Chen', 'Deathwing', 'Dehaka', 'DVa', 'Tinker',
              'Hogger', 'Imperius', 'Leoric', 'Malthael', 'Ragnaros', 
              'Rexxar', 'Barbarian', 'Thrall', 'Varian', 'Necromancer', 'Yrel']
-meleesAssasins = ['Alarak', 'Butcher', 'Illidan', 'Kerrigan', 'Maiev',
+meleesAssassins = ['Alarak', 'Butcher', 'Illidan', 'Kerrigan', 'Maiev',
                  'Murky', 'NexusHunter', 'Samuro',  'Valeera', 'Zeratul']
 support = ['Abathur', 'Medivh', 'LostVikings', 'Zarya']
 
@@ -66,20 +66,20 @@ for h in heroes:
             r = 'Bruiser'
         elif h in tanks:
             r = 'Tank'
-        elif h in meleesAssasins:
-            r = 'Melee Assasin'
+        elif h in meleesAssassins:
+            r = 'Melee Assassin'
         elif h in support:
             r = 'Support'
         elif 'AllyHealer' in data_json[h]['descriptors']:
             r = 'Healer'
         else:
-            r = 'Ranged Assasin'
+            r = 'Ranged Assassin'
     except:
         print(h, 'hero has no descriptors')
         if h == 'Hogger':
             r = 'Bruiser'
         elif h == 'Maiev':
-            r = 'Melee Assasin'
+            r = 'Melee Assassin'
         elif h == 'LostVikings':
             r = 'Support'
         else:
