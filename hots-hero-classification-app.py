@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import pickle
 import os
+from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 
 
@@ -32,7 +34,6 @@ model_option = st.sidebar.selectbox('Model',
     'Multinomial Naive Bayes'
     )
 )
-print(model_option)
 
 # slider for user to adjust inputs to model
 def make_slider(var_name, slider_name):
@@ -74,7 +75,12 @@ st.write(user_df_display)
 
 
 # load the model from disk
-loaded_model = pickle.load(open('rf_model.sav', 'rb'))
+if model_option == 'Random Forest':
+    loaded_model = pickle.load(open('rf_model.sav', 'rb'))
+elif model_option == 'Gaussian Naive Bayes':
+    loaded_model = pickle.load(open('gnb_model.sav', 'rb'))
+else:
+    loaded_model = pickle.load(open('mnb_model.sav', 'rb'))
 
 # predict hero role based on user input
 prediction = pd.DataFrame(loaded_model.predict(user_df), columns=['Role'])
